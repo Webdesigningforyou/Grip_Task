@@ -7,23 +7,22 @@ import matplotlib.pyplot as plt
 
 #Load the csv file
 data=pd.read_csv("student_data.csv")
-
 print(data.columns)
 print(data.head(10))
 
-
+#Details about the data
 print(data.info())
-
 print(data.describe())
+
+#Scatter plot for real data
 plt.scatter(data.Hours,data.Scores,color="blue", marker="o")
 plt.xlabel('Hours')
 plt.ylabel("Scores")
-
 plt.show()
+
 #define train variables for the linear_model
 x_train=np.array(data["Hours"]).reshape((-1,1))
 y_train=np.array(data["Scores"])
-
 reg=linear_model.LinearRegression()
 reg.fit(x_train,y_train)
 
@@ -33,21 +32,16 @@ y_predict=reg.predict(x_train)
 plt.plot(x_train,y_predict,color="black") #predicted values
 plt.xlabel('Hours')
 plt.ylabel("Scores")
-
 plt.show()
-
-
-# output for the 9.25 hours/day
-hours=9.25
-predicted_score=reg.predict([[hours]])
-
-
-print("Score={0:.2f} when hours are {1}".format(predicted_score[0],hours))
-
 
 #Model Evaluation metrics
 mean_squ_error=mean_squared_error(y_train,y_predict)
 mean_abs_error=mean_absolute_error(y_train,y_predict)
 print("Mean Squared Error is {:.2f}".format(mean_squ_error))
 print("Mean Absolute Error is {:.2f}".format(mean_abs_error))
+
+# output for the 9.25 hours/day
+hours=9.25
+predicted_score=reg.predict([[hours]])
+print("Score={0:.2f} when hours are {1}".format(predicted_score[0],hours))
 print("END")
